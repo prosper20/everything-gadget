@@ -2,9 +2,6 @@ const express = require('express');
 const productController = require('../contorllers/productController');
 
 const router = express.Router();
-const validateId = require('../utils/validateId');
-
-router.param('id', validateId);
 
 router.route('/featured').get(productController.aliasFeatured, productController.getAllProducts);
 router.route('/product-stats').get(productController.getProductStats);
