@@ -5,7 +5,9 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server"
+    "dev": "nodemon server",
+    "prod": "NODE_ENV=production nodemon server",
+    "debug": "ndb server"
   },
   "keywords": [],
   "author": "",
@@ -26,6 +28,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.31.8",
+    "ndb": "^1.1.5",
     "nodemon": "^2.0.19",
     "prettier": "^2.7.1"
   },

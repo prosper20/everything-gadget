@@ -1,7 +1,9 @@
 const express = require('express');
-const createError = require('http-errors');
+//const createError = require('http-errors');
 //const morgan = require('morgan');
 
+const Problem = require('./utils/problem');
+const errorHandler = require('./contorllers/errorController');
 const productRouter = require('./routes/productRoutes');
 //const userRouter = require('./routes/userRoutes');
 
@@ -19,20 +21,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/v1/products', productRouter);
 //app.use('/api/v1/users', userRouter);
 
-app.get('*', (req, res) => {
-  throw createError(404, 'PAGE NOT FOUND');
+app.get('*', (req, res, next) => {
+  //throw createError(404, 'PAGE NOT FOUND');
+  next(new Problem(`Can't find ${req.originalUrl} on this server!`, 404));
 });
 
 //error handler
-app.use((err, req, res, next) => {
-  res.status(err.status || 500);
-  res.send({
-    error: {
-      status: err.status || 500,
-      message: err.message,
-      path: err.path,
-    },
-  });
-});
+app.use(errorHandler);
 
 module.exports = app;
