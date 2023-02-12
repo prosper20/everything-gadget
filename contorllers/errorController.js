@@ -6,7 +6,8 @@ const castErrorHandlerDB = (err) => {
 };
 
 const duplicateFieldsHandlerDB = (err) => {
-  const message = `Product: ${err.keyValue.name} already exist. Please use another name!`;
+  const fields = Object.keys(err.keyValue).join(', ');
+  const message = `The ${fields} you provided already exist. Please use another ${fields}!`;
   return new Problem(message, 400);
 };
 const validationErrorHandlerDB = (err) => {
@@ -51,12 +52,16 @@ module.exports = (err, req, res, next) => {
   err.status = err.status || 'error';
 
   if (process.env.NODE_ENV === 'development') {
+    console.log(err);
     sendErrorDev(err, res);
   } else if (process.env.NODE_ENV === 'production') {
     let error = { ...err };
-    if (error.name === 'CastError' || error.kind === 'ObjectId') error = castErrorHandlerDB(error);
-    if (error.code === 11000) error = duplicateFieldsHandlerDB(error);
-    if (error.name === 'ValidationError' || error.errors.name.name === 'ValidatorError')
+    console.log(error);
+    if (error.name === 'CastError' || error.kind === 'ObjectId') {
+      error = castErrorHandlerDB(error);
+    } else if (error.code === 11000) {
+      error = duplicateFieldsHandlerDB(error);
+    } else if (error.name === 'ValidationError' || error.errors.name.name === 'ValidatorError')
       error = validationErrorHandlerDB(error);
 
     sendErrorProd(error, res);
