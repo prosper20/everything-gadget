@@ -56,12 +56,16 @@ module.exports = (err, req, res, next) => {
     sendErrorDev(err, res);
   } else if (process.env.NODE_ENV === 'production') {
     let error = { ...err };
+    error.message = err.message;
     console.log(error);
     if (error.name === 'CastError' || error.kind === 'ObjectId') {
       error = castErrorHandlerDB(error);
     } else if (error.code === 11000) {
       error = duplicateFieldsHandlerDB(error);
-    } else if (error.name === 'ValidationError' || error.errors.name.name === 'ValidatorError')
+    } else if (
+      error.name === 'ValidationError' ||
+      (error.errors ? error.errors[Object.keys(error.errors)[0]].name === 'ValidatorError' : false)
+    )
       error = validationErrorHandlerDB(error);
 
     sendErrorProd(error, res);
