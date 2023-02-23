@@ -14,7 +14,7 @@ mongoose
   .connect(process.env.MONGO_URI, {
     user: process.env.MONGO_USER,
     pass: process.env.MONGO_PASS,
-    dbname: 'everythingGadgets',
+    dbname: 'everydb',
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -30,6 +30,8 @@ const server = app.listen(port, () => {
 process.on('unhandledRejection', (err) => {
   console.log('UNHANDLED REJECTION! 💥 Shutting down...');
   console.log(err.name, err.message);
+  console.log(process.env.MONGO_USER)
+  console.log(process.env.MONGO_PASS)
   server.close(() => {
     process.exit(1);
   });
