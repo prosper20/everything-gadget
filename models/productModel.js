@@ -37,6 +37,9 @@ const productSchema = new mongoose.Schema(
       type: [String],
       required: [true, 'A product must have a category'],
     },
+    space: {
+      type: String,
+    },
     reviewsQuantity: {
       type: Number,
       default: 0,
