@@ -5,7 +5,7 @@ const { Order, OrderItem } = require('../models/orderModel');
 exports.checkout = async (req, res) => {
   try {
     const { items, ...orderData } = req.body;
-    // const orderItemData = await orderItemSchema.validateAsync(items);
+
     const order = new Order({
       ...orderData.order,
       user: req.user._id,
@@ -47,7 +47,7 @@ exports.checkout = async (req, res) => {
 
     await order.save();
 
-    res.json(response.data);
+    res.json({ email: req.user.email, ...response.data });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Something went wrong' });
