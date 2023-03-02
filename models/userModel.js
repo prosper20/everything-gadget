@@ -37,19 +37,22 @@ const userSchema = new mongoose.Schema(
       default: true,
       select: false,
     },
-    savedProducts: [String],
-    accountBalance: {
-      type: Number,
-      default: 0.0,
-    },
-    paymentInfo: {
-      type: Object,
-    },
-    billingAddress: {
-      type: Object,
-    },
+    savedProducts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }],
     address: {
-      type: Object,
+      type: [String],
+      default: [],
+    },
+    postal_code: {
+      type: String,
+      default: '',
+    },
+    city: {
+      type: String,
+      default: '',
+    },
+    state: {
+      type: String,
+      default: '',
     },
   },
   { timestamps: true }

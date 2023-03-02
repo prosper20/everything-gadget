@@ -13,6 +13,15 @@ router.patch('/update/password', auth, authController.updatePassword);
 
 router.route('/').get(userController.getAllUsers).post(userController.createUser);
 
+router.get('/saved/products/', auth, userController.getSavedProducts);
+
+router
+  .route('/saved/products/:id')
+  .patch(auth, userController.addSavedProducts)
+  .delete(auth, userController.removeSavedProducts);
+
+router.route('/profile').get(auth, userController.getUserProfile).patch(auth, userController.patchUserProfle);
+
 router.route('/:id').get(userController.getUser).patch(userController.updateUser).delete(userController.deleteUser);
 
 module.exports = router;
