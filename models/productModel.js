@@ -46,10 +46,10 @@ const productSchema = new mongoose.Schema(
     },
     images: [
       {
-        public_id: {
+        filename: {
           type: String,
         },
-        secure_url: {
+        secureUrl: {
           type: String,
         },
       },
