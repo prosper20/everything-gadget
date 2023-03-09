@@ -37,16 +37,19 @@ const productSchema = new mongoose.Schema(
       type: [String],
       required: [true, 'A product must have a category'],
     },
+    space: {
+      type: String,
+    },
     reviewsQuantity: {
       type: Number,
       default: 0,
     },
     images: [
       {
-        public_id: {
+        filename: {
           type: String,
         },
-        secure_url: {
+        secureUrl: {
           type: String,
         },
       },
