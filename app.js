@@ -34,7 +34,7 @@ async function startApp() {
   await mongoose.connect(process.env.MONGO_URI, {
     user: process.env.MONGO_USER,
     pass: process.env.MONGO_PASS,
-    dbname: 'everydb',
+    dbname: process.env.DB,
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
