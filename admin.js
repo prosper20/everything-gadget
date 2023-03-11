@@ -10,11 +10,6 @@ AdminJS.registerAdapter({
   Database: AdminJSMongoose.Database,
 });
 
-const ADMIN = {
-  email: 'test@example.com',
-  password: 'password',
-};
-
 const adminOptions = {
   resources: [
     User,
@@ -32,4 +27,16 @@ const adminOptions = {
   ],
 };
 
-module.exports = { ADMIN, AdminJS, adminOptions };
+async function adminAuth(email, password) {
+  const user = await User.findOne({ email }).select('+password');
+
+  if ((await user.correctPassword(password, user.password)) && user.role === 'admin') {
+    return {
+      email: user.email,
+      password: user.password,
+    };
+  }
+  return null;
+}
+
+module.exports = { AdminJS, adminAuth, adminOptions };

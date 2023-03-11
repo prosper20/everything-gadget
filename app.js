@@ -11,8 +11,7 @@ const hpp = require('hpp');
 //const morgan = require('morgan');
 
 const AdminJSExpress = require('@adminjs/express');
-
-const { ADMIN, AdminJS, adminOptions } = require('./admin');
+const { AdminJS, adminAuth, adminOptions } = require('./admin');
 
 const Problem = require('./utils/problem');
 const errorHandler = require('./contorllers/errorController');
@@ -41,14 +40,12 @@ async function startApp() {
 
   console.log('Database connection successful');
 
+  // setup admin app
   const admin = new AdminJS(adminOptions);
+
+  // setup admin authentication route
   const adminRouter = AdminJSExpress.buildAuthenticatedRouter(admin, {
-    authenticate: async (email, password) => {
-      if (ADMIN.password === password && ADMIN.email === email) {
-        return ADMIN;
-      }
-      return null;
-    },
+    authenticate: adminAuth,
     cookiePassword: 'somasd1nda0asssjsdhb21uy3g',
     maxRetries: {
       count: 3,

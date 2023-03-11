@@ -20,7 +20,7 @@ mongoose
   .connect(process.env.MONGO_URI, {
     user: process.env.MONGO_USER,
     pass: process.env.MONGO_PASS,
-    dbname: process.env.MONGO_DB,
+    dbname: process.env.DB,
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -39,6 +39,7 @@ mongoose
                 name,
                 email,
                 password: password,
+                passwordConfirm: password,
                 phoneNumber,
                 role: 'admin',
                 active: true,
