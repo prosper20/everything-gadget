@@ -1,8 +1,11 @@
 const express = require('express');
 const productController = require('../contorllers/productController');
 //const auth = require('../middleware/auth');
+const reviewRouter = require('./reviewRoutes');
 
 const router = express.Router();
+
+router.use('/:productId/reviews', reviewRouter);
 
 router.route('/featured').get(productController.aliasFeatured, productController.getAllProducts);
 router.route('/product-stats').get(productController.getProductStats);

@@ -94,6 +94,15 @@ userSchema.pre('save', function (next) {
 });
 
 userSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'savedProducts',
+    select: 'name',
+  });
+
+  next();
+});
+
+userSchema.pre(/^find/, function (next) {
   // this points to the current query
   this.find({ active: { $ne: false } });
   next();

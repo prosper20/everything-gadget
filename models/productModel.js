@@ -15,7 +15,7 @@ const productSchema = new mongoose.Schema(
       type: Number,
       default: 4.5,
       min: [1, 'Rating must be above 1.0'],
-      max: [5, 'Rating must be below 5.0'],
+      max: [5, 'Rating must be 5.0 or below'],
     },
     price: {
       type: Number,
@@ -67,9 +67,20 @@ const productSchema = new mongoose.Schema(
       trim: true,
     },
   },
+  {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+  },
   { timestamps: true }
 );
 productSchema.index({ name: 'text', brand: 'text', summary: 'text' });
+
+// Virtual populate
+productSchema.virtual('reviews', {
+  ref: 'Review',
+  foreignField: 'product',
+  localField: '_id',
+});
 
 const Product = mongoose.model('Product', productSchema);
 
