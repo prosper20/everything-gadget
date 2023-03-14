@@ -20,6 +20,7 @@ const productRouter = require('./routes/productRoutes');
 const userRouter = require('./routes/userRoutes');
 const orderRouter = require('./routes/orderRoutes');
 const blogRouter = require('./routes/blogRoutes');
+const reviewRouter = require('./routes/reviewRoutes');
 
 dotenv.config();
 
@@ -91,6 +92,7 @@ async function startApp() {
   app.use('/api/v1/users', userRouter);
   app.use('/api/v1/orders', orderRouter);
   app.use('/api/v1/blogs', blogRouter);
+  app.use('/api/v1/reviews', reviewRouter);
 
   app.get('*', (req, res, next) => {
     //throw createError(404, 'PAGE NOT FOUND');
