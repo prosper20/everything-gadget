@@ -6,7 +6,7 @@ const factory = require('./handlerFactory');
 
 const filterObj = (obj) => {
   const newObj = obj;
-  const excludedFields = ['role', 'password', 'passwordConfirm', 'passwordChangedAt'];
+  const excludedFields = ['role', 'password', 'passwordConfirm', 'passwordChangedAt', 'savedProducts'];
   excludedFields.forEach((el) => delete newObj[el]);
 
   return newObj;
@@ -71,15 +71,19 @@ exports.addSavedProducts = catchAsync(async (req, res) => {
   if (!product) {
     return res.status(400).json({ error: 'Product not found' });
   }
+  const savedProdIds = user.savedProducts.map((el) => el.id);
 
-  user.savedProducts.push(product._id);
-  user.save({ validateBeforeSave: false });
+  if (!savedProdIds.includes(product._id.toString())) {
+    user.savedProducts.push(product._id);
+    user.save({ validateBeforeSave: false });
+  }
+  //const { savedProducts } = await User.findById(req.user._id).select('savedProducts');
 
   res.status(200).json({
     status: 'success',
     message: 'product succesfully added',
     data: {
-      savedproducts: user.savedProducts,
+      savedProducts: user.savedProducts,
     },
   });
 });
