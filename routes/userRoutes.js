@@ -26,7 +26,7 @@ router
   .route('/profile')
   .get(auth, userController.getUserProfile)
   .patch(auth, userController.patchUserProfle)
-  .delete(auth, userController.deleteUserProfle);
+  .delete(auth, userController.setUserId, userController.deleteUserProfle);
 
 router.route('/:id').get(userController.getUser).patch(userController.updateUser).delete(userController.deleteUser);
 
