@@ -1,0 +1,17 @@
+extends baseEmail
+
+block content
+  p Hi #{firstName},
+  p Welcome to Everything-Gadget, we're glad to have you 🎉🙏
+  p Waste no time, log in to your account and start shopping:
+  table.btn.btn-primary(role='presentation', border='0', cellpadding='0', cellspacing='0')
+    tbody
+      tr
+        td(align='left')
+          table(role='presentation', border='0', cellpadding='0', cellspacing='0')
+            tbody
+              tr
+                td
+                  a(href=`${url}`, target='_blank') Shop Now
+  p Our goal is to offer the widest range of gadgets at the highest quality. If you think we should add any items to our store, don’t hesitate to contact us and share your feedback.
+  p Until then, enjoy your shopping!
