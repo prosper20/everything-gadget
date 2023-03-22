@@ -7,8 +7,8 @@ const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
-//const createError = require('http-errors');
-//const morgan = require('morgan');
+const compression = require('compression');
+const cors = require('cors');
 
 const AdminJSExpress = require('@adminjs/express');
 
@@ -26,10 +26,13 @@ dotenv.config();
 
 const app = express();
 
-// 1) MIDDLEWARES
-if (process.env.NODE_ENV === 'development') {
-  //app.use(morgan('dev'));
-}
+app.enable('trust proxy');
+
+// MIDDLEWARES
+
+// Implement CORS
+app.use(cors());
+app.options('*', cors());
 
 async function startApp() {
   await mongoose.connect(process.env.MONGO_URI, {
@@ -69,7 +72,7 @@ async function startApp() {
     windowMs: 60 * 60 * 1000,
     message: 'Too many requests from this IP, please try again in an hour!',
   });
-  app.use('/api', limiter);
+  app.use('/api/v1/users/login', limiter);
 
   app.use(express.json({ limit: '20kb' }));
   app.use(express.urlencoded({ extended: true }));
@@ -86,6 +89,8 @@ async function startApp() {
       whitelist: ['reviewsQuantity', 'averageRating', 'price'],
     })
   );
+
+  app.use(compression());
 
   // 3) ROUTES
   app.use('/api/v1/products', productRouter);

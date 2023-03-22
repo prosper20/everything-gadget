@@ -16,7 +16,7 @@
 
 ## API Description
 
-Click [here](https://astonishing-croissant-2fe0b8.netlify.app) for the current discription of the api in Swagger Editor.
+Click [here](https://documenter.getpostman.com/view/24186009/2s93CHtuRV) for the current api documentaion on Postman.
 
 ## Run locally
 
@@ -30,9 +30,9 @@ Click [here](https://astonishing-croissant-2fe0b8.netlify.app) for the current d
 
 3. Install dependencies using
 
-```bash
-   npm install
-```
+   ```bash
+      npm install
+   ```
 
 4. Create a .env file in the root folder and set your environment variables
 
